@@ -6,12 +6,15 @@ from google.cloud import bigquery
 from schemas import BQ_TABLE_SCHEMA
 
 
-def get_tweets_data(search_string:str, limit: int):
+def get_tweets_data(search_string:str, limit: int, start_date: str = '', end_date: str = ''):
     conf = twint.Config()
     conf.Hide_output = True
     conf.Limit = limit
     conf.Search = search_string
     conf.Pandas = True
+    conf.Since = start_date
+    conf.Until = end_date
+
 
     twint.run.Search(conf)
     tweets_df = twint.storage.panda.Tweets_df
@@ -51,6 +54,32 @@ def ingest_tweets(request):
     if request.args and 'search_query' in request.args:
         search_query = request.args.get('search_query')
     else: return "Missing 'search_query' argument"
+
+    if request.args and 'start_date' in request.args:
+        start_date = request.args.get('start_date')
+    else:
+        start_date = ''
+
+    if request.args and 'end_date' in request.args:
+        end_date = request.args.get('end_date')
+    else:
+        end_date = ''
+
+    if request.args and 'date' in request.args:
+        exact_date = request.args.get('date')
+    else:
+        exact_date = ''
+
+    if exact_date != '':
+        if start_date != '':
+            return "Invalid 'start_date' and 'date' arguments simultaneously"
+        else:
+            start_date = exact_date + ' 00:00:00'
+
+        if end_date != '':
+            return "Invalid 'end_date' and 'date' arguments simultaneously"
+        else:
+            end_date = exact_date + ' 23:59:59'
 
     tweets_df = get_tweets_data(search_query, tweet_limit, start_date=start_date, end_date=end_date)
 
