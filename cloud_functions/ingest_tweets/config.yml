@@ -1,0 +1,2 @@
+tweeet_limit: 5000
+destination_table: apex-sentiment.raw.tweet_data

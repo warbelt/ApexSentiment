@@ -24,7 +24,7 @@ def save_df_to_bq(df, schema, table_id:str):
 
     job_config = bigquery.LoadJobConfig(
         schema = schema,
-        write_disposition = "WRITE_TRUNCATE"
+        write_disposition = "WRITE_APPEND"
     )
 
     job = client.load_table_from_dataframe(
@@ -44,13 +44,15 @@ def ingest_tweets(request):
     with open('config.yml', 'r') as file:
         conf = yaml.safe_load(file)
 
-    if request.args and 'message' in request.args:
-        return request.args.get('message')
+    if request.args and 'character' in request.args:
+        character = request.args.get('character')
+    else: return "Missing 'character' argument"
 
-    champion = 'Gibraltar'
-    search_string = 'gibby'
+    if request.args and 'search_query' in request.args:
+        search_query = request.args.get('search_query')
+    else: return "Missing 'search_query' argument"
 
-    tweets_df = get_tweets_data(search_string, conf['limit'])
+    tweets_df = get_tweets_data(search_query, conf['tweeet_limit'])
 
     tweets_df['created_at'] = tweets_df['created_at'].astype(int)
     tweets_df['hashtags'] = tweets_df['hashtags'].astype(str)
@@ -58,6 +60,6 @@ def ingest_tweets(request):
     tweets_df['urls'] = tweets_df['urls'].astype(str)
     tweets_df['photos'] = tweets_df['photos'].astype(str)
     tweets_df['reply_to'] = tweets_df['reply_to'].astype(str)
-    tweets_df['champion'] = champion
+    tweets_df['character'] = character
 
     save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, conf['destination_table'])
