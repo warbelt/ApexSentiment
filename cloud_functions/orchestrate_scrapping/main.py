@@ -52,6 +52,12 @@ def orchestrate_scrapping(request):
         query_string = f"?character={k}&search_query={parsed_search}&date={date_string}"
         url = f"{scrapping_url}{query_string}"
         print(f"calling function url: {url}")
-        requests.get(url)
+        # This is a bit hacky, we don't want to wait for the response.
+        # Set a low timeout, send request and forget about response.
+        try:
+            requests.get(url, timeout=0.0000000001)
+        except requests.exceptions.ReadTimeout:
+            pass
 
+    print('Scrap finished. See the ingestion function logs to see individual results/errors')
     return("Scrap success")

@@ -15,7 +15,6 @@ def get_tweets_data(search_string:str, limit: int, start_date: str = '', end_dat
     conf.Since = start_date
     conf.Until = end_date
 
-
     twint.run.Search(conf)
     tweets_df = twint.storage.panda.Tweets_df
 
