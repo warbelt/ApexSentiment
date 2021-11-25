@@ -87,12 +87,8 @@ def ingest_tweets(request):
 
     print(f'Retrieved {len(tweets_df.index)} tweets.')
 
-    tweets_df['created_at'] = tweets_df['created_at'].astype(int)
-    tweets_df['hashtags'] = tweets_df['hashtags'].astype(str)
-    tweets_df['cashtags'] = tweets_df['cashtags'].astype(str)
-    tweets_df['urls'] = tweets_df['urls'].astype(str)
-    tweets_df['photos'] = tweets_df['photos'].astype(str)
-    tweets_df['reply_to'] = tweets_df['reply_to'].astype(str)
+    for col in tweets_df.columns.tolist():
+        tweets_df[col] = tweets_df[col].astype(str)
     tweets_df['character'] = character
 
     loaded_rows = save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, destination_table)
