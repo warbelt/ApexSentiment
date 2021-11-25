@@ -81,7 +81,11 @@ def ingest_tweets(request):
         else:
             end_date = exact_date + ' 23:59:59'
 
+    print(f'Scrap {tweet_limit} tweets for query {search_query}.')
+
     tweets_df = get_tweets_data(search_query, tweet_limit, start_date=start_date, end_date=end_date)
+
+    print(f'Retrieved {len(tweets_df.index)} tweets.')
 
     tweets_df['created_at'] = tweets_df['created_at'].astype(int)
     tweets_df['hashtags'] = tweets_df['hashtags'].astype(str)
@@ -92,5 +96,4 @@ def ingest_tweets(request):
     tweets_df['character'] = character
 
     loaded_rows = save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, destination_table)
-
     return f'Loaded {loaded_rows} tweets'
