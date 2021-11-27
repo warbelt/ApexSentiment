@@ -1,0 +1,40 @@
+{
+    "schema" : [
+        {
+            "name" : "tweet_id",
+            "type" : "STRING"
+        },
+        {
+            "name" : "tweet_time",
+            "type" : "TIMESTAMP"
+        },
+        {
+            "name" : "tweet_text",
+            "type" : "STRING"
+        },
+        {
+            "name" : "tweet_language",
+            "type" : "STRING"
+        },
+        {
+            "name" : "tweet_likes",
+            "type" : "INTEGER"
+        },
+        {
+            "name" : "tweet_replies",
+            "type" : "INTEGER"
+        },
+        {
+            "name" : "tweet_retweets",
+            "type" : "INTEGER"
+        },
+        {
+            "name" : "scrap_search_query",
+            "type" : "STRING"
+        },
+        {
+            "name" : "scrap_search_character",
+            "type" : "STRING"
+        }
+    ]
+}
