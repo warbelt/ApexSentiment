@@ -1,6 +1,6 @@
 import os
 import requests
-import urllib
+import urllib.parse
 import datetime
 import csv
 import io
