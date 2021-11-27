@@ -55,7 +55,7 @@ def orchestrate_scrapping(request):
         # This is a bit hacky, we don't want to wait for the response.
         # Set a low timeout, send request and forget about response.
         try:
-            requests.get(url, timeout=0.0000000001)
+            requests.get(url, timeout=1)
         except requests.exceptions.ReadTimeout:
             pass
 
