@@ -1,8 +1,8 @@
 -- This query does two things:
 --  - Make sure to only select ids that are not alredy in the masterized data
 --  - Select rows to be masterized, cast and rename raw input fields before inserting in master data
-INSERT INTO
-    `apex-sentiment.master.tweet_data`
+-- INSERT INTO
+    -- `apex-sentiment.master.tweet_data`
 SELECT
     new_tweets.id                                                               AS tweet_id,
     TIMESTAMP_MILLIS(CAST(CAST(new_tweets.created_at AS FLOAT64 ) AS INT64))    AS tweet_time,
