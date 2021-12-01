@@ -35,6 +35,14 @@
         {
             "name" : "scrap_search_character",
             "type" : "STRING"
+        },
+        {
+            "name" : "_data_ingest_date",
+            "type" : "DATE"
+        },
+        {
+            "name" : "_data_master_date",
+            "type" : "DATE"
         }
     ]
 }
