@@ -1,4 +1,6 @@
 import os
+import time
+from datetime import date
 
 import twint
 from google.cloud import bigquery
@@ -21,7 +23,7 @@ def get_tweets_data(search_string:str, limit: int, start_date: str = '', end_dat
     return tweets_df
 
 
-def save_df_to_bq(df, schema, table_id:str) -> int:
+def save_df_to_bq(df, schema, table_id:str):
     client = bigquery.Client()
 
     job_config = bigquery.LoadJobConfig(
@@ -29,13 +31,18 @@ def save_df_to_bq(df, schema, table_id:str) -> int:
         write_disposition = "WRITE_APPEND"
     )
 
-    job = client.load_table_from_dataframe(
-        df, table_id, job_config=job_config
-    )
-    job.result()
-
-    table = client.get_table(table_id)
-    return(table.num_rows)
+    busy = True
+    backoff = 20
+    while busy:
+        try:
+            job = client.load_table_from_dataframe(
+                df, table_id, job_config=job_config
+            )
+            job.result(retry=bigquery.DEFAULT_RETRY)
+            busy = False
+        except:
+            print(f"retry in [{backoff}] seconds")
+            time.sleep(backoff)
 
 
 def ingest_tweets(request):
@@ -91,5 +98,5 @@ def ingest_tweets(request):
     tweets_df['character'] = character
     tweets_df['_data_ingest_date'] = date.today()
 
-    loaded_rows = save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, destination_table)
-    return f'Loaded {loaded_rows} tweets'
+    save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, destination_table)
+    return f'Retrieved {len(tweets_df.index)} tweets.'
