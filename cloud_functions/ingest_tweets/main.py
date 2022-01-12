@@ -89,6 +89,7 @@ def ingest_tweets(request):
     for col in tweets_df.columns.tolist():
         tweets_df[col] = tweets_df[col].astype(str)
     tweets_df['character'] = character
+    tweets_df['_data_ingest_date'] = date.today()
 
     loaded_rows = save_df_to_bq(tweets_df, BQ_TABLE_SCHEMA, destination_table)
     return f'Loaded {loaded_rows} tweets'

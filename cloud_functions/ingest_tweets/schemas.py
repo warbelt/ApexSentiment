@@ -39,5 +39,6 @@ BQ_TABLE_SCHEMA = [
     bigquery.SchemaField("translate",           bigquery.enums.SqlTypeNames.STRING),
     bigquery.SchemaField("trans_src",           bigquery.enums.SqlTypeNames.STRING),
     bigquery.SchemaField("trans_dest",          bigquery.enums.SqlTypeNames.STRING),
-    bigquery.SchemaField("character",           bigquery.enums.SqlTypeNames.STRING)
+    bigquery.SchemaField("character",           bigquery.enums.SqlTypeNames.STRING),
+    bigquery.SchemaField("_data_ingest_date",   bigquery.enums.SqlTypeNames.DATE),
 ]
