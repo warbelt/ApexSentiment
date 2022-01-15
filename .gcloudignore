@@ -15,5 +15,4 @@
 
 node_modules
 #!include:.gitignore
-env.yaml
-env.yml
+**/env.yaml.template
