@@ -1,3 +1,7 @@
+# IAM Policies
+User needs Bigquery Owner role for scheduling queryies
+
+
 # Environment variables
 
 ### For ingest_tweets function

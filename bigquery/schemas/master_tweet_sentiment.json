@@ -1,0 +1,20 @@
+{
+    "schema" : [
+        {
+            "name" : "tweet_id",
+            "type" : "STRING"
+        },
+        {
+            "name" : "sentiment_score",
+            "type" : "FLOAT"
+        },
+        {
+            "name" : "sentiment_magnitude",
+            "type" : "FLOAT"
+        },
+        {
+            "name" : "_data_sentiment_date",
+            "type" : "DATE"
+        }
+    ]
+}
