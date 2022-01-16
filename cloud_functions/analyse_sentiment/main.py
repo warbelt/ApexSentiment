@@ -72,7 +72,7 @@ def analyse_sentiment(request):
         })
 
     sentiment_df = pd.DataFrame(results)
-    sentiment_df['_data_sentiment_date'] = date.today().strftime("%Y-%m-%d")
+    sentiment_df['_data_sentiment_date'] = date.today()
 
     save_df_to_bq(sentiment_df, BQ_TABLE_SCHEMA, destination_table)
 
