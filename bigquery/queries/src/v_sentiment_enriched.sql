@@ -5,9 +5,9 @@ WITH
             AVG(sentiment_magnitude)        AS lang_avg_magnitude,
             tweet_language
         FROM
-            (SELECT * FROM `apex-sentiment.master.tweets_sentiment` WHERE sentiment_score != 0.0) sent
+            (SELECT * FROM `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` WHERE sentiment_score != 0.0) sent
         LEFT JOIN
-            `apex-sentiment.master.tweets_data` tweets_data
+            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweets_data
         ON
             sent.tweet_id = tweets_data.tweet_id
         GROUP BY
@@ -19,9 +19,9 @@ WITH
             AVG(sentiment_magnitude)        AS char_avg_magnitude,
             scrap_search_character
         FROM
-            (SELECT * FROM `apex-sentiment.master.tweets_sentiment` WHERE sentiment_score != 0.0) sent
+            (SELECT * FROM `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` WHERE sentiment_score != 0.0) sent
         LEFT JOIN
-            `apex-sentiment.master.tweets_data` tweets_data
+            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweets_data
         ON
             sent.tweet_id = tweets_data.tweet_id
         GROUP BY
@@ -33,9 +33,9 @@ SELECT
     avg_sentiment_by_lang.* EXCEPT (tweet_language),
     avg_sentiment_by_char.* EXCEPT (scrap_search_character),
 FROM
-    `apex-sentiment.master.tweets_sentiment` sentiment
+    `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` sentiment
 LEFT JOIN
-    `apex-sentiment.master.tweets_data` tweet_data
+    `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweet_data
 ON
     sentiment.tweet_id = tweet_data.tweet_id
 LEFT JOIN

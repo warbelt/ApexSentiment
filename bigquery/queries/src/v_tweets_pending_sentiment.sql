@@ -18,13 +18,13 @@ FROM (
         SELECT DISTINCT
             *
         FROM
-            apex-sentiment.master.tweets_data
+            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}`
     ) all_tweets
     LEFT JOIN (
         SELECT DISTINCT
             tweet_id,
         FROM
-            `apex-sentiment.master.tweets_sentiment`
+            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}`
     ) analysed_tweets
     ON all_tweets.tweet_id = analysed_tweets.tweet_id
     WHERE analysed_tweets.tweet_id IS NULL
