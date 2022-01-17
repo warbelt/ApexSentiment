@@ -1,8 +1,10 @@
 import os
+import yaml
 
 
-SOURCE_QUERIES_FOLDER = "bigquery\queries\src"
-COMPILED_QUERIES_FOLDER = "bigquery\queries\dist"
+SOURCE_QUERIES_FOLDER = "bigquery/queries/src"
+COMPILED_QUERIES_FOLDER = "bigquery/queries/dist"
+BUILD_VARIABLES_FILE = "scripts/build_variables.yaml"
 
 
 def compile_query(query_file_name: str, replacements: dict):
@@ -16,15 +18,13 @@ def compile_query(query_file_name: str, replacements: dict):
         file.write(filedata)
 
 
-REPLACEMENTS = {
-    "PROJECT_NAME" : "rock-sentinel",
-    "MASTER_DATASET_NAME" : "master",
-    "MASTER_TWEETS_DATA_TABLE_NAME" : "tweets_data",
-    "RAW_DATASET_NAME" : "raw",
-    "RAW_TWEETS_DATA_TABLE_NAME" : "tweets_data",
-    "MASTER_TWEETS_SENTIMENT_TABLE_NAME" : "tweets_sentiment",
-}
+if __name__ == "__main__":
+    if not os.path.isdir(COMPILED_QUERIES_FOLDER):
+        os.mkdir(COMPILED_QUERIES_FOLDER)
 
-compile_query("masterize_tweet_data.sql", REPLACEMENTS)
-compile_query("v_sentiment_enriched.sql", REPLACEMENTS)
-compile_query("v_tweets_pending_sentiment.sql", REPLACEMENTS)
+with open(BUILD_VARIABLES_FILE, "r") as f:
+    replacements = yaml.safe_load(f)
+
+    compile_query("masterize_tweet_data.sql", replacements)
+    compile_query("v_sentiment_enriched.sql", replacements)
+    compile_query("v_tweets_pending_sentiment.sql", replacements)
