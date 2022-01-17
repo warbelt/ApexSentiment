@@ -1,1 +1,0 @@
-gcloud functions deploy ingest_tweets --source cloud_functions\ingest_tweets --runtime python37 --trigger-http --allow-unauthenticated
