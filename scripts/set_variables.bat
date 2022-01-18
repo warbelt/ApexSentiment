@@ -1,0 +1,26 @@
+@echo off
+
+set gcp_project_name=rock-sentinel
+
+set bq_dataset_raw_name=raw
+set bq_dataset_master_name=master
+set bq_dataset_application_name=application
+
+set gs_master_data_bucket_name=sentiment_master_data
+
+set tweets_data_table_name=tweets_data
+set tweets_data_table_schema=bigquery\schemas\master_tweet_data.json
+set tweets_data_masterization_query=bigquery\queries\dist\masterize_tweet_data.sql
+
+set tweets_sentiment_table_name=tweets_sentiment
+set tweets_sentiment_table_schema=bigquery\schemas\master_tweet_sentiment.json
+
+set tweets_pending_sentiment_view_name=v_tweets_data_pending_sentiment
+set tweets_pending_sentiment_view_query=bigquery\queries\dist\v_tweets_pending_sentiment.sql
+
+set sentiment_application_data_view_name=v_sentiment_enriched
+set sentiment_application_data_view_query=bigquery\queries\dist\v_sentiment_enriched.sql
+
+set GCP_PROJECT_NAME=rock-sentinel
+set GS_MASTER_DATA_BUCKET_NAME=sentiment_master_data
+set FUNCTIONS_REGION=us-east1
