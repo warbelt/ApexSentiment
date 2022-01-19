@@ -1,26 +1,24 @@
 @echo off
 
-set gcp_project_name=rock-sentinel
+SET GCP_PROJECT_NAME=rock-sentinel
+SET FUNCTIONS_REGION=us-east1
 
-set bq_dataset_raw_name=raw
-set bq_dataset_master_name=master
-set bq_dataset_application_name=application
+SET BQ_DATASET_RAW_NAME=raw
+SET BQ_DATASET_MASTER_NAME=master
+SET BQ_DATASET_APPLICATION_NAME=application
 
-set gs_master_data_bucket_name=sentiment_master_data
+SET GS_MASTER_DATA_BUCKET_NAME=sentiment_master_data
 
-set tweets_data_table_name=tweets_data
-set tweets_data_table_schema=bigquery\schemas\master_tweet_data.json
-set tweets_data_masterization_query=bigquery\queries\dist\masterize_tweet_data.sql
+SET BQ_TABLE_RAW_TWEETS_DATA_NAME=tweets_data
+SET BQ_TABLE_MASTER_TWEETS_DATA_NAME=tweets_data
+SET BQ_TABLE_MASTER_TWEETS_DATA_SCHEMA=bigquery\schemas\master_tweet_data.json
+SET BQ_QUERY_TWEETS_DATA_MASTERIZATION=bigquery\queries\dist\masterize_tweet_data.sql
 
-set tweets_sentiment_table_name=tweets_sentiment
-set tweets_sentiment_table_schema=bigquery\schemas\master_tweet_sentiment.json
+SET BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME=tweets_sentiment
+SET BQ_TABLE_MASTER_TWEETS_SENTIMENT_SCHEMA=bigquery\schemas\master_tweet_sentiment.json
 
-set tweets_pending_sentiment_view_name=v_tweets_data_pending_sentiment
-set tweets_pending_sentiment_view_query=bigquery\queries\dist\v_tweets_pending_sentiment.sql
+SET BQ_VIEW_MASTER_TWEETS_PENDING_SENTIMENT_NAME=v_tweets_data_pending_sentiment
+SET BQ_VIEW_MASTER_TWEETS_PENDING_SENTIMENT_QUERY=bigquery\queries\dist\v_tweets_pending_sentiment.sql
 
-set sentiment_application_data_view_name=v_sentiment_enriched
-set sentiment_application_data_view_query=bigquery\queries\dist\v_sentiment_enriched.sql
-
-set GCP_PROJECT_NAME=rock-sentinel
-set GS_MASTER_DATA_BUCKET_NAME=sentiment_master_data
-set FUNCTIONS_REGION=us-east1
+SET BQ_VIEW_MASTER_SENTIMENT_APPLICATION_DATA_NAME=v_sentiment_enriched
+SET BQ_VIEW_MASTER_SENTIMENT_APPLICATION_DATA_QUERY=bigquery\queries\dist\v_sentiment_enriched.sql

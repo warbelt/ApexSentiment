@@ -18,13 +18,13 @@ FROM (
         SELECT DISTINCT
             *
         FROM
-            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}`
+            `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}`
     ) all_tweets
     LEFT JOIN (
         SELECT DISTINCT
             tweet_id,
         FROM
-            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}`
+            `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME}}`
     ) analysed_tweets
     ON all_tweets.tweet_id = analysed_tweets.tweet_id
     WHERE analysed_tweets.tweet_id IS NULL

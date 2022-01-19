@@ -1,5 +1,6 @@
 @echo off
 
+:: Set environment variables
 CALL %~dp0\set_variables.bat
 
 :: --- ingest_tweets function
@@ -17,7 +18,7 @@ CALL gcloud functions deploy ingest_tweets ^
 
 :: --- orchestrate_scrapping fuction
 :: upload searches csv file
-CALL gsutil cp storage/searches.csv gs://%GCP_PROJECT_NAME%__%gs_master_data_bucket_name%
+CALL gsutil cp storage/searches.csv gs://%GCP_PROJECT_NAME%__%GS_MASTER_DATA_BUCKET_NAME%
 :: deploy function
 CALL gcloud functions deploy orchestrate_scrapping ^
 --source cloud_functions\orchestrate_scrapping ^

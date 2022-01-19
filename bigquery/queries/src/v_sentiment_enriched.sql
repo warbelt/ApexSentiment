@@ -5,9 +5,9 @@ WITH
             AVG(sentiment_magnitude)        AS lang_avg_magnitude,
             tweet_language
         FROM
-            (SELECT * FROM `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` WHERE sentiment_score != 0.0) sent
+            (SELECT * FROM `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME}}` WHERE sentiment_score != 0.0) sent
         LEFT JOIN
-            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweets_data
+            `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}` tweets_data
         ON
             sent.tweet_id = tweets_data.tweet_id
         GROUP BY
@@ -19,9 +19,9 @@ WITH
             AVG(sentiment_magnitude)        AS char_avg_magnitude,
             scrap_search_character
         FROM
-            (SELECT * FROM `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` WHERE sentiment_score != 0.0) sent
+            (SELECT * FROM `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME}}` WHERE sentiment_score != 0.0) sent
         LEFT JOIN
-            `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweets_data
+            `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}` tweets_data
         ON
             sent.tweet_id = tweets_data.tweet_id
         GROUP BY
@@ -33,9 +33,9 @@ SELECT
     avg_sentiment_by_lang.* EXCEPT (tweet_language),
     avg_sentiment_by_char.* EXCEPT (scrap_search_character),
 FROM
-    `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_SENTIMENT_TABLE_NAME}}` sentiment
+    `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME}}` sentiment
 LEFT JOIN
-    `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}` tweet_data
+    `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}` tweet_data
 ON
     sentiment.tweet_id = tweet_data.tweet_id
 LEFT JOIN

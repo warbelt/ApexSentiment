@@ -6,7 +6,7 @@
 
 
 INSERT INTO
-    `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}`
+    `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}`
 SELECT
     new_tweets._data_ingest_date                                                AS _data_ingest_date
     CURRENT_DATE()                                                              AS _data_master_date
@@ -23,13 +23,13 @@ FROM (
     SELECT DISTINCT
         *
     FROM
-        `{{PROJECT_NAME}}.{{RAW_DATASET_NAME}}.{{RAW_TWEETS_DATA_TABLE_NAME}}`
+        `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_RAW_NAME}}.{{BQ_TABLE_RAW_TWEETS_DATA_NAME}}`
 ) new_tweets
 LEFT JOIN (
     SELECT DISTINCT
         tweet_id,
     FROM
-        `{{PROJECT_NAME}}.{{MASTER_DATASET_NAME}}.{{MASTER_TWEETS_DATA_TABLE_NAME}}`
+        `{{GCP_PROJECT_NAME}}.{{BQ_DATASET_MASTER_NAME}}.{{BQ_TABLE_MASTER_TWEETS_DATA_NAME}}`
 ) old_tweets
 ON new_tweets.id = old_tweets.tweet_id
 WHERE old_tweets.tweet_id IS NULL
