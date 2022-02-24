@@ -1,3 +1,14 @@
+"""
+This script takes the base SQL files in bigquery/queries/src, and replaces
+placeholder values with the final values stored as environment variables.
+The resulting SQL code is writen in files in bigquery/queries/dist.
+
+Placeholders are labeled as {{NAME}}
+
+To add replacements:
+1. Add a placeholder inside the src query
+2. Add a replacement in the main function "replacements" dictionary 
+"""
 import os
 import sys
 
@@ -17,7 +28,7 @@ def compile_query(query_file_name: str, src_dir: str, dist_dir: str, replacement
         file.write(filedata)
 
 
-if __name__ == "__main__":
+def main():
     src_dir = os.path.join(os.path.dirname(sys.argv[0]), SOURCE_QUERIES_FOLDER)
     dist_dir = os.path.join(os.path.dirname(sys.argv[0]), COMPILED_QUERIES_FOLDER)
 
@@ -33,9 +44,10 @@ if __name__ == "__main__":
         "BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME":os.getenv("BQ_TABLE_MASTER_TWEETS_SENTIMENT_NAME"),
     }
 
-    print("repllace")
-    print(replacements)
-
     compile_query("masterize_tweet_data.sql", src_dir, dist_dir, replacements)
     compile_query("v_sentiment_enriched.sql", src_dir, dist_dir, replacements)
     compile_query("v_tweets_pending_sentiment.sql", src_dir, dist_dir, replacements)
+
+
+if __name__ == "__main__":
+    main()

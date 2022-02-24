@@ -1,3 +1,18 @@
+"""
+This function is responsible for extracting tweet data using the twint library.
+Scrapped data will be saved to a BigQuery table.
+
+This function expects the following arguments in the request:
+character: Name of the search. Search results will be labeled with this value.
+search_query: Search string using the twitter advanced search format
+start_date: Lower end of the search's time range.
+end_date: Upper end of the search's time range.
+date: Single date for the search
+
+One, and only one of the following combinations must be specified:
+date
+start_date AND end_date.
+"""
 import os
 import time
 from datetime import date

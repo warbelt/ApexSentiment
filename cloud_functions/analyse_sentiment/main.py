@@ -1,3 +1,32 @@
+"""
+This function is responsible for analysing tweets sentiment.
+Tweet data is read from a BigQuery table, and sentiment data is stored in
+another BigQuery table.
+
+Sentiment data is written with the following fields:
+tweet_id: Unique identifier of the tweet
+sentiment_score: [-1:1] Positiveness of the tweet sentiment
+sentiment_magnitude: [0:1] Strength of the sentiment
+_data_sentiment_date: Audit field
+
+M               |
+a    Strongly   |
+g    Negative   |   Strongly positive
+n               |
+i     __________|__________
+t               |
+u   Slightly    |   Lighly positive   
+d   Negative    |
+e               |
+          Positiveness
+
+Currently, sentiment data is analyzed using Google Natural Language service.
+If desired, it is possible to swap to another sentiment analysis service, as
+long as the service returns the two sentiment values (score and magnitude)
+
+This function expects no arguments in the request.
+"""
+
 import os
 from datetime import date
 

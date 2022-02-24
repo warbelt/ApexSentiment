@@ -1,3 +1,15 @@
+"""
+This function is responsible for calling the ingest_tweets function once for
+every different search query, as configured in /storage/searches.csv
+
+The searches file has two columns:
+name: Name of the search. It will be used to label search results
+query: Search query using twitter advanced search format
+
+This function receives no arguments in the request.
+For every row in the searches file, a call to the scrapping function will be
+scheduled.
+"""
 import os
 import requests
 import urllib.parse
@@ -9,6 +21,8 @@ from google.cloud import storage
 
 
 def get_searches_dict(bucket, filename):
+    """
+    """
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket)
 
